@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate,Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserRole, setUserToken } from '../../common/rolesmanager';
 import axios from 'axios';
 
 const defaultTheme = createTheme();
@@ -20,6 +22,7 @@ export const LoginPage = () => {
   const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,14 +35,10 @@ export const LoginPage = () => {
     try {
       const response = await axios.post('http://localhost:8080/api/auth/signin', userData);
 
-      // Handle the response as needed
-      console.log(response.data);
+      dispatch(setUserToken(response.data.token));
+      dispatch(setUserRole(response.data.roles[0])); 
       localStorage.setItem('token', response.data.token);
-
-      // Assuming the response contains a token or some identifier, you can save it to state or local storage
-      // For example, if the response has a token: localStorage.setItem('token', response.data.token);
-
-      // Navigate to the desired page
+      localStorage.setItem('roles', response.data.roles);
       navigate('/products'); 
 
     } catch (error) {

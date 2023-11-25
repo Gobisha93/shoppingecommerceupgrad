@@ -20,6 +20,7 @@ export const SignUpPage= () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setcontactNumber] = useState('');
+  const [role] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ export const SignUpPage= () => {
       firstName,
       lastName,
       contactNumber,
+      role
     };
 
     try {

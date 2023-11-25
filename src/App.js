@@ -6,9 +6,12 @@ import Home from './components/Home';
 import SignUpPage from './components/Header/SignUpPage';
 import UserPage from './components/UserPage';
 import ProductsPage from './components/Product/ProductsPage';
-
+import { Provider } from 'react-redux';
+import { Roles } from './common/rolesstore';
+import AddProduct from './components/Product/AddProduct';
 function App() {
-  return   <Router>
+  return    <Provider store={Roles}>
+  <Router>
       <Navbar />
       
       <Routes>
@@ -16,6 +19,7 @@ function App() {
       <Route exact path='/login' element={< LoginPage />}></Route>
       <Route exact path='/signup' element={< SignUpPage />}></Route>
       <Route exact path='/products' element={< ProductsPage />}></Route>
+      <Route exact path='/addproduct' element={< AddProduct />}></Route>
       <Route exact path='/userpage' element={< UserPage />}></Route>
       <Route path="*" element={<Navigate to="/" />} />
       {/* <Route path="/login" exact component={LoginPage} /> */}
@@ -23,7 +27,7 @@ function App() {
       </Routes>
       
     </Router>
-       
+    </Provider> 
     
     
   
