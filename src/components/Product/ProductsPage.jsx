@@ -22,7 +22,18 @@ const ProductPage = () => {
  const [selectedOption, setSelectedOption] = useState('');
 
  const handleSelectChange = (event) => {
-   setSelectedOption(event.target.value);
+   const selectedOption = event.target.value;
+        if(selectedOption === 'high-low')
+            setProducts([...products].sort((a, b) =>  b.price - a.price))
+        else if(selectedOption === 'low-high')
+            setProducts([...products].sort((a, b) => a.price - b.price))
+
+            else if (selectedOption === 'newest') {
+              setProducts([...products].sort((a, b) => b.id - a.id));
+            }
+            else if(selectedOption === 'default'){
+            setProducts([...products])}
+        setSelectedOption(selectedOption);
  };
  const addingCart = (productDetails) => {
   navigate('/productDetails', { state: { product: productDetails } });
@@ -90,6 +101,7 @@ const handleSubmit = (id) => {
                     <ToggleButton value="Furniture">Furniture</ToggleButton>
                     <ToggleButton value="Personal Care">Personal Care</ToggleButton>
     </ToggleButtonGroup>
+    
     <Box>
                     <FormControl style={{ minWidth: 300, float: 'left', marginTop: 25, textAlign: 'justify' }}>
                         <InputLabel id="sortBy">Sort By</InputLabel>

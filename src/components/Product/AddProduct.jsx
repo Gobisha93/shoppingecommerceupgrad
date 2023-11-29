@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField'
 import Select from '@mui/material/Select';
 //import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-//import {Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -25,6 +24,8 @@ const [description, setDescription] = useState('');
 const [manufacturer, setManufacturer] = useState('');
 const [availableItems, setAvailableItems] = useState('');
 const [imageUrl, setImageUrl] = useState('');
+const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
     const [category, setCategory] = useState('');
 
@@ -55,9 +56,13 @@ const handleSubmit = async (event) => {
             'Authorization': 'Bearer '+ userToken
         },
        
-    })   
-    console.log(response); }catch (error) {
-        // Handle errors
+    }) 
+    setSuccessMessage('Product Added successfully');
+    setErrorMessage('');  
+    console.log(response);
+   }catch (error) {
+        setSuccessMessage('');
+        setErrorMessage('Error updating product. Please try again.');
         console.error('Error:', error.message);
       }
     };
@@ -74,7 +79,16 @@ const handleSubmit = async (event) => {
               alignItems: 'center',
             }}
           >
-           
+           {successMessage && (
+              <Typography variant="body1" sx={{ mt: 2, color: '#3bc303' }}>
+                {successMessage}
+              </Typography>
+            )}
+            {errorMessage && (
+              <Typography variant="body1" sx={{ mt: 2, color: 'red' }}>
+                {errorMessage}
+              </Typography>
+            )}
             <Typography component="h1" variant="h5" >
               Add Product
             </Typography>

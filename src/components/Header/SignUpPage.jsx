@@ -11,36 +11,38 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-//import Link from '@mui/material/Link';
-
+import { useDispatch } from 'react-redux';
+import { setUserRole, setUserToken, setUserId } from '../../common/rolesmanager';
 const defaultTheme = createTheme();
 export const SignUpPage= () => {
   const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setcontactNumber] = useState('');
-  const [role] = useState('');
+  //const [role] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userData = {
       email,
-      password,
       firstName,
       lastName,
       contactNumber,
-      role
+      password
     };
-
+console.log(userData);
     try {
       const response = await axios.post('http://localhost:8080/api/auth/signup', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+      dispatch(setUserRole(response.data.roles[0]));
+      dispatch(setUserToken(response.data.token));
+      dispatch(setUserId(response.data.userDetails.id));
       console.log('Signup successful:', response.data);
       navigate('/login');
     } catch (error) {
@@ -142,20 +144,22 @@ export const SignUpPage= () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2 ,backgroundColor:'#3f51b5'}}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/login" variant="body2" style={{ paddingRight:'80px' }}>
+                <Link to="/login" variant="body2" >
                   Already have an account? Sign in
                 </Link>
               </Grid>
               <Grid item>
-              <Typography variant="body2" color={'GrayText'} style={{ margin: '3em', textAlign: 'center',paddingRight:'80px' }}>
-        Copyright @ upGrad 2021
-      </Typography>
+              <Typography variant="body2" color={'GrayText'} style={{margin: '3em',paddingRight:75}}>
+                Copyright @ <Link to="/" variant="body2">
+                    {"upGrad"}
+                  </Link> 2021
+            </Typography>
               </Grid>
             </Grid>
           </Box>
