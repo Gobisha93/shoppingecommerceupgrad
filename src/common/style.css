@@ -1,0 +1,16 @@
+.Search 
+{
+  color:yellow;
+}
+.login
+{
+  color:'white';
+padding-right:'20px'
+}
+#logout{
+  background-color: #eb0f56;
+    width: 94px;
+    height: 31px;
+    border-radius: 5px;
+    color: white;
+}

@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selectUserRole, setUserRole, setUserId } from '../../common/rolesmanager';
 import SearchBar from '../SearchPage/SearchBar';
+import "../../common/style.css";
+
 
 
 
@@ -18,31 +20,30 @@ const Navbar = () => {
       dispatch(setUserId(null));
       navigate('/');
   };
-  return <AppBar>
+  return <AppBar sx={{backgroundColor:'#3f51b5'}}>
     <Toolbar>
      <IconButton edge="start" color="inherit" aria-label="menu">
        <ShoppingCartIcon /></IconButton>
       <Typography variant="h6" style={{ flexGrow: 1 }}>upGrad E-Shop</Typography>
       
-      {/* <InputBase placeholder="Search..." /> */}
+      
      
       {userRole === 'DEFAULT' ? <>
                 <Link to={{pathname:"/login", state: null}} style={{margin: 10, color: 'white'}} >
                         <Typography   variant="body1" color="inherit" component="div">
                         Login
                         </Typography>
-                    </Link></> : <>
-                        <button type="button" className ="btn btn-danger" onChange={handlingLogout}>Log out</button>
-                    </>
-                }
+                    </Link>
                     <Link to={{pathname:"/signup", state: null}} style={{margin: 10, color: 'white'}} >
                         <Typography   variant="body1" color="inherit" component="div">
                         SignUp
                         </Typography>
-                    </Link>
+                    </Link></> : ``
+                }
+                   
        {userRole === 'ADMIN' ? <>
        <SearchBar/>
-       <Link to={{pathname:"/", state: null}} style={{margin: 10, color: 'white'}} >
+       <Link to={{pathname:"/products", state: null}} style={{margin: 10, color: 'white'}} >
                         <Typography   variant="body1" color="inherit" component="div">
                             Home
                         </Typography>
@@ -52,6 +53,20 @@ const Navbar = () => {
                             Add Product
                         </Typography>
                     </Link>
+                    <button type="button" id="logout" className ="btn btn-danger" onClick={handlingLogout}>LOGOUT</button>
+                  
+                    
+                </>: ``}
+                {userRole === 'USER' ? <>
+                <SearchBar/>
+       <Link to={{pathname:"/", state: null}} style={{margin: 10, color: 'white'}} >
+                        <Typography   variant="body1" color="inherit" component="div">
+                            Home
+                        </Typography>
+                    </Link>
+                    
+                    <button type="button" id="logout" className ="btn btn-danger" onClick={handlingLogout}>LOGOUT</button>
+                  
                     
                 </>: ``}
                

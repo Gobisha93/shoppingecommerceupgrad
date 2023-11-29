@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,7 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate,Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUserRole, setUserToken } from '../../common/rolesmanager';
+import { setUserId, setUserRole, setUserToken } from '../../common/rolesmanager';
 import axios from 'axios';
 
 const defaultTheme = createTheme();
@@ -37,6 +35,7 @@ export const LoginPage = () => {
 
       dispatch(setUserToken(response.data.token));
       dispatch(setUserRole(response.data.roles[0])); 
+      dispatch(setUserId(response.data.userDetails.id));
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('roles', response.data.roles);
       navigate('/products'); 
@@ -88,15 +87,12 @@ export const LoginPage = () => {
                 autoComplete="current-password" 
                 
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+             
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2,backgroundColor:'#3f51b5' }}
               >
                 Sign In
               </Button>
@@ -107,8 +103,10 @@ export const LoginPage = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                <Typography variant="body2" color={'GrayText'} style={{margin: '3em'}}>
-                Copyright @ upGrad 2021
+                <Typography variant="body2" color={'GrayText'} style={{margin: '3em',paddingLeft:70}}>
+                Copyright @ <Link to="/" variant="body2">
+                    {"upGrad"}
+                  </Link> 2021
             </Typography>
             </Grid>
               </Grid>
